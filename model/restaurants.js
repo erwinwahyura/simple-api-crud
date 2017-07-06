@@ -6,6 +6,6 @@ var restaurantSchema = new Schema({
   owner: String,
   address: String
 });
-var restaurant = mongoose.model('Food', restaurantSchema);
+var restaurant = mongoose.model('Restaurant', restaurantSchema);
 
 module.exports = restaurant
