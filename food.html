@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>home</title>
+    <title></title>
     <script src="https://unpkg.com/vue"></script>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="/style.css">
   </head>
   <body>
-    <div id="app">
+    <div class="container" id="app">
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
@@ -31,13 +31,13 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" href="index.html">Brand</a>
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
+              <li class="active"><a href="index.html">Home</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -52,7 +52,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ADD <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="food.html">Foods</a></li>
-                  <li><a href="restaurant.html">Restaurants</a></li>
+                  <li><a href="#">Restaurants</a></li>
                 </ul>
               </li>
 
@@ -60,37 +60,53 @@
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
+    	<div class="row">
 
+    	    <div class="col-md-8 col-md-offset-2">
 
-      <div class="container">
+        		<h1>Create post Food</h1>
 
-        <div class="row">
-          <h1>List Foods</h1>
-          <hr>
-          <div class="col-xs-18 col-sm-6 col-md-3" v-for="item in items">
-            <div class="thumbnail">
-              <img src="http://images.prokal.co/webradarkaltim/files/berita/2016/04/15/daging-ayam-di-pasar-haram.jpg" alt="">
-              <hr>
-                <div class="caption">
-                  <h4>{{ item.name }}</h4>
-                  <p>Rp. {{ item.price }}</p>
-              </div>
-            </div>
-          </div>
+        		<form>
+        		    <div class="form-group">
+        		        <label for="Name">Name <span class="require">*</span></label>
+        		        <input type="text" v-model="food.name" class="form-control" name="Name" />
 
-        </div><!-- End row -->
+        		    </div>
 
-      </div><!-- End container -->
+        		    <div class="form-group">
+        		        <label for="price">Price</label>
+        		         <input type="Number" v-model.number="food.price" class="form-control" name="price" />
+        		    </div>
+
+        		    <div class="form-group">
+        		        <p><span class="require">*</span> - required fields</p>
+        		    </div>
+
+        		    <div class="form-group">
+        		        <button type="submit" @click="postFood()" class="btn btn-primary">
+        		            Create
+        		        </button>
+        		        <button class="btn btn-default">
+        		            Cancel
+        		        </button>
+        		    </div>
+
+        		</form>
+    		</div>
+
+    	</div>
     </div>
-
     <script type="text/javascript">
       var app = new Vue({
         el: '#app',
         data: {
           message: 'Hello Vue!',
           items: [],
-          name: '',
-          price: ''
+          food: {
+            name: '',
+            price: 0
+          }
+
         },
         created: function() {
           this.getData()
@@ -100,11 +116,8 @@
             var self = this
             axios.get('http://localhost:3000/api/foods')
             .then(function (response) {
-              app.items = response.data
-
-              console.log('ini items: ', self.items);
-
               console.log(response.data);
+              self.items = self.response.data
             })
             .catch(function (error) {
               console.log(error);
@@ -113,8 +126,8 @@
           postFood: function() {
             var self = this
             axios.post('http://localhost:3000/api/foods', {
-              name: self.name,
-              lastName: self.price
+              name: self.food.name,
+              price: self.food.price
             })
             .then(function (response) {
               console.log(response.data);
@@ -126,6 +139,5 @@
         }
       })
     </script>
-
   </body>
 </html>
