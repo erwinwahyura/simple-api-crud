@@ -1,8 +1,11 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose');
+var cors = require('cors')
+
 mongoose.connect('mongodb://localhost/simple-crud-erwin');
 var app = express()
+app.use(cors())
 
 var index = require('./routes/index')
 // parse application/x-www-form-urlencoded
