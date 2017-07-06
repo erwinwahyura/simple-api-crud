@@ -36,7 +36,7 @@ var edit = function(req, res) {
 }
 
 var remove = function(req, res) {
-  m_food.deleteOne(req.params._id, function(err, result) {
+  m_food.deleteOne({_id:req.params._id}, function(err, result) {
     err ? res.status(400).send(err) : res.status(200).send(result)
   })
 }
